@@ -360,48 +360,37 @@
 
 <script>
 // ── WELCOME VOICE ──
-function playWelcomeVoice() {
-  if (!window.speechSynthesis) return;
-  const msg = new SpeechSynthesisUtterance("Welcome to the P S L Talent Guide Malaysia. How can we help you today?");
-  msg.lang = 'en-GB';
-  msg.rate = 0.92;
-  msg.pitch = 1.05;
-  msg.volume = 1;
+function playWelcome() {
+  const audio = document.getElementById('welcomeAudio');
+  const btn = document.getElementById('soundBtn');
+  const icon = document.getElementById('soundIcon');
+  const text = document.getElementById('soundText');
 
-  const trySpeak = () => {
-    const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find(v =>
-      v.lang.startsWith('en') && (
-        v.name.includes('Female') ||
-        v.name.includes('Samantha') ||
-        v.name.includes('Karen') ||
-        v.name.includes('Moira') ||
-        v.name.includes('Victoria') ||
-        v.name.includes('Google UK English Female') ||
-        v.name.includes('Microsoft Zira') ||
-        v.name.includes('Microsoft Libby')
-      )
-    );
-    if (preferred) msg.voice = preferred;
-    window.speechSynthesis.speak(msg);
-  };
-
-  if (window.speechSynthesis.getVoices().length > 0) {
-    trySpeak();
-  } else {
-    window.speechSynthesis.onvoiceschanged = trySpeak;
+  if (!audio.paused) {
+    audio.pause();
+    audio.currentTime = 0;
+    btn.classList.remove('playing');
+    icon.textContent = 'ð';
+    text.textContent = 'Play Welcome Message';
+    return;
   }
-}
 
-let voicePlayed = false;
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    if (!voicePlayed) { voicePlayed = true; playWelcomeVoice(); }
-  }, 1200);
-});
-document.addEventListener('click', () => {
-  if (!voicePlayed) { voicePlayed = true; playWelcomeVoice(); }
-}, { once: true });
+  btn.classList.add('playing');
+  icon.textContent = 'ð';
+  text.textContent = 'Playing...';
+
+  audio.play().catch(() => {
+    btn.classList.remove('playing');
+    icon.textContent = 'ð';
+    text.textContent = 'Play Welcome Message';
+  });
+
+  audio.onended = () => {
+    btn.classList.remove('playing');
+    icon.textContent = 'ð';
+    text.textContent = 'Play Welcome Message';
+  };
+}
 
 // ── SEARCH KNOWLEDGE BASE ──
 const KB = [
