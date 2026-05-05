@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSL Talent Guide · Malaysia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0f2044; --navy-mid: #1a3460;
+    --accent: #e8472a; --orange: #d4621a;
+    --white: #ffffff; --light: #f4f6fb;
+    --text: #1e2d45; --muted: #6b7fa3; --border: #dce3ef;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(160deg, #0a1830 0%, #0f2044 45%, #1a3460 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+
+  .hero {
+    width: 100%;
+    max-width: 620px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 75% 40%, rgba(200,134,10,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 70%, rgba(232,71,42,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Logo */
+  .hero-logo {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-bottom: 40px;
+    position: relative; z-index: 1;
+  }
+  .hero-logo-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--accent), var(--orange));
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 6px 20px rgba(232,71,42,0.35);
+  }
+  .hero-logo-text { text-align: left; }
+  .hero-logo-text strong {
+    font-family: 'Playfair Display', serif;
+    color: var(--white); font-size: 18px;
+    font-weight: 600; display: block;
+  }
+  .hero-logo-text span { color: rgba(255,255,255,0.42); font-size: 12.5px; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: clamp(30px, 6vw, 48px);
+    font-weight: 600; line-height: 1.2;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+  h1 em { font-style: italic; color: rgba(255,255,255,0.55); }
+
+  .subtitle {
+    color: rgba(255,255,255,0.45);
+    font-size: 15px; line-height: 1.65;
+    max-width: 440px; margin: 0 auto 38px;
+    position: relative; z-index: 1;
+  }
+
+  /* Search */
+  .search-wrap { position: relative; z-index: 2; }
+  .search-box {
+    display: flex; align-items: center;
+    background: var(--white);
+    border-radius: 18px;
+    padding: 6px 6px 6px 22px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.28);
+    gap: 12px;
+  }
+  .search-icon { color: var(--muted); flex-shrink: 0; }
+  .search-box input {
+    flex: 1; border: none; outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: transparent; padding: 9px 0;
+  }
+  .search-box input::placeholder { color: var(--muted); }
+  .search-btn {
+    background: linear-gradient(135deg, var(--accent), var(--orange));
+    border: none; border-radius: 13px;
+    padding: 11px 26px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: opacity 0.15s, transform 0.1s;
+    box-shadow: 0 4px 14px rgba(232,71,42,0.3);
+    white-space: nowrap;
+  }
+  .search-btn:hover { opacity: 0.9; }
+  .search-btn:active { transform: scale(0.97); }
+
+  .search-results {
+    background: var(--white);
+    border-radius: 16px;
+    margin-top: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    overflow: hidden;
+    display: none;
+    text-align: left;
+  }
+  .search-results.active { display: block; }
+  .no-results { padding: 16px 20px; font-size: 13px; color: var(--muted); text-align: center; }
+  .result-item {
+    display: flex; align-items: center; gap: 13px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.12s;
+    text-decoration: none;
+  }
+  .result-item:last-child { border-bottom: none; }
+  .result-item:hover { background: var(--light); }
+  .result-icon { font-size: 22px; flex-shrink: 0; }
+  .result-body { flex: 1; }
+  .result-title { font-size: 13.5px; font-weight: 600; color: var(--navy); }
+  .result-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .result-arrow { color: var(--border); font-size: 16px; flex-shrink: 0; }
+
+  /* Common searches */
+  .common {
+    margin-top: 20px;
+    display: flex; flex-wrap: wrap;
+    gap: 8px; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .common-label { font-size: 12px; color: rgba(255,255,255,0.35); width: 100%; margin-bottom: 2px; }
+  .tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 22px; padding: 6px 16px;
+    font-size: 12.5px; color: rgba(255,255,255,0.6);
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .tag:hover { background: rgba(255,255,255,0.16); color: var(--white); border-color: rgba(255,255,255,0.25); }
+
+  /* ── FLOATING CHATBOT ── */
+  .chat-fab {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 1000;
+  }
+
+  /* Toggle button */
+  .chat-toggle {
+    width: 58px; height: 58px;
+    background: linear-gradient(135deg, var(--accent), var(--orange));
+    border: none; border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(232,71,42,0.45);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .chat-toggle:hover { transform: scale(1.08); box-shadow: 0 8px 28px rgba(232,71,42,0.55); }
+  .chat-toggle .icon-open { font-size: 24px; transition: opacity 0.2s, transform 0.2s; }
+  .chat-toggle .icon-close { font-size: 20px; position: absolute; opacity: 0; transition: opacity 0.2s, transform 0.2s; transform: rotate(-90deg); }
+  .chat-fab.open .icon-open { opacity: 0; transform: rotate(90deg); }
+  .chat-fab.open .icon-close { opacity: 1; transform: rotate(0deg); }
+
+  /* Notification dot */
+  .notif-dot {
+    position: absolute; top: 2px; right: 2px;
+    width: 12px; height: 12px;
+    background: #4ade80; border-radius: 50%;
+    border: 2px solid var(--white);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+
+  /* Chat window */
+  .chat-window {
+    position: absolute;
+    bottom: 70px; right: 0;
+    width: 360px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 16px 56px rgba(15,32,68,0.22);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+    transform-origin: bottom right;
+    max-height: 520px;
+  }
+  .chat-fab.open .chat-window {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Chat header */
+  .cw-header {
+    background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px;
+    position: relative; overflow: hidden;
+  }
+  .cw-header::after { content:''; position:absolute; right:-15px; top:-25px; width:90px; height:90px; border-radius:50%; background:rgba(200,134,10,0.10); }
+  .cw-header-icon { width:36px; height:36px; background:linear-gradient(135deg,var(--accent),var(--orange)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; z-index:1; }
+  .cw-header-info { z-index:1; }
+  .cw-header-info h3 { font-family:'Playfair Display',serif; color:var(--white); font-size:13.5px; font-weight:600; }
+  .cw-header-info p { color:rgba(255,255,255,0.45); font-size:10.5px; margin-top:2px; display:flex; align-items:center; gap:4px; }
+  .cw-dot { width:5px; height:5px; background:#4ade80; border-radius:50%; animation:pulse 2s infinite; }
+
+  /* Quick buttons */
+  .cw-quick { padding:9px 12px 0; display:flex; gap:5px; flex-wrap:wrap; }
+  .cw-qbtn { background:var(--light); border:1px solid var(--border); border-radius:16px; padding:4px 10px; font-size:10.5px; color:var(--navy-mid); cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.12s; white-space:nowrap; }
+  .cw-qbtn:hover { background:var(--navy); color:var(--white); border-color:var(--navy); }
+
+  /* Messages */
+  .cw-messages { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:9px; scroll-behavior:smooth; min-height:200px; max-height:280px; }
+  .cw-messages::-webkit-scrollbar{width:3px;}
+  .cw-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  .cw-msg { display:flex; gap:7px; align-items:flex-end; animation:fadeUp 0.2s ease; }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .cw-msg.user { flex-direction:row-reverse; }
+  .cw-av { width:24px; height:24px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; }
+  .cw-av.bot { background:var(--navy); color:var(--white); font-size:11px; }
+  .cw-av.user { background:linear-gradient(135deg,var(--accent),var(--orange)); color:var(--white); font-size:10px; }
+  .cw-bub { max-width:82%; padding:8px 12px; border-radius:13px; font-size:12px; line-height:1.55; color:var(--text); }
+  .cw-msg.bot .cw-bub { background:var(--white); border:1px solid var(--border); border-bottom-left-radius:3px; box-shadow:0 1px 3px rgba(15,32,68,0.05); }
+  .cw-msg.user .cw-bub { background:var(--navy); color:var(--white); border-bottom-right-radius:3px; }
+  .cw-bub a { color:var(--accent); text-decoration:none; font-weight:600; }
+
+  .cw-page-card { margin-top:5px; background:var(--light); border:1px solid var(--border); border-radius:8px; padding:7px 10px; display:flex; align-items:center; gap:7px; text-decoration:none !important; transition:background 0.12s; cursor:pointer; }
+  .cw-page-card:hover { background:#e8edf7; }
+  .cw-pc-icon { font-size:14px; flex-shrink:0; }
+  .cw-pc-title { font-size:11.5px; font-weight:600; color:var(--navy); display:block; }
+  .cw-pc-desc { font-size:10px; color:var(--muted); display:block; }
+  .cw-pc-arrow { color:var(--muted); font-size:11px; margin-left:auto; }
+
+  .cw-typing { display:flex; align-items:center; gap:3px; padding:8px 12px; }
+  .cw-td { width:5px; height:5px; background:var(--muted); border-radius:50%; animation:tyB 1.2s infinite; }
+  .cw-td:nth-child(2){animation-delay:0.2s;} .cw-td:nth-child(3){animation-delay:0.4s;}
+  @keyframes tyB{0%,60%,100%{transform:translateY(0);opacity:0.4;}30%{transform:translateY(-4px);opacity:1;}}
+
+  /* Input */
+  .cw-input-bar { padding:9px 11px; border-top:1px solid var(--border); display:flex; gap:7px; align-items:flex-end; }
+  .cw-input-wrap { flex:1; background:var(--light); border:1.5px solid var(--border); border-radius:10px; padding:7px 11px; display:flex; align-items:center; transition:border-color 0.15s; }
+  .cw-input-wrap:focus-within { border-color:var(--navy-mid); }
+  .cw-input-wrap textarea { flex:1; background:transparent; border:none; outline:none; resize:none; font-family:'DM Sans',sans-serif; font-size:12px; color:var(--text); line-height:1.4; max-height:60px; overflow-y:auto; }
+  .cw-input-wrap textarea::placeholder { color:var(--muted); }
+  .cw-send { width:34px; height:34px; background:var(--navy); border:none; border-radius:9px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background 0.15s; }
+  .cw-send:hover { background:var(--navy-mid); }
+  .cw-send:disabled { background:var(--border); cursor:not-allowed; }
+  .cw-send svg { width:13px; height:13px; fill:none; stroke:white; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .cw-powered { text-align:center; font-size:9.5px; color:var(--muted); padding:4px 0 7px; }
+
+  @media(max-width:480px) {
+    .chat-window { width: calc(100vw - 40px); right: 0; }
+    .search-btn span { display: none; }
+    .search-btn { padding: 11px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SEARCH HERO -->
+<div class="hero">
+  <div class="hero-logo">
+    <div class="hero-logo-icon">🧭</div>
+    <div class="hero-logo-text">
+      <strong>PSL Talent Guide</strong>
+      <span>Malaysia · PeerHealth</span>
+    </div>
+  </div>
+  <h1>How can we <em>help you</em> today?</h1>
+  <p class="subtitle">Search for HR resources, policies, benefits, and more — or ask our AI assistant directly.</p>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search policies, leave, benefits, contacts…"
+        oninput="doSearch(this.value)"
+        onkeydown="if(event.key==='Enter')doSearch(this.value,true)">
+      <button class="search-btn" onclick="doSearch(document.getElementById('searchInput').value,true)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>Search</span>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <div class="common">
+    <div class="common-label">Common searches:</div>
+    <button class="tag" onclick="trigger('annual leave')">Annual leave</button>
+    <button class="tag" onclick="trigger('public holidays')">Public holidays</button>
+    <button class="tag" onclick="trigger('medical')">Medical</button>
+    <button class="tag" onclick="trigger('expense claim')">Expense claim</button>
+    <button class="tag" onclick="trigger('contact HR')">Contact HR</button>
+    <button class="tag" onclick="trigger('overtime')">Overtime</button>
+    <button class="tag" onclick="trigger('sick leave')">Sick leave</button>
+    <button class="tag" onclick="trigger('salary')">Salary</button>
+  </div>
+</div>
+
+<!-- FLOATING CHATBOT -->
+<div class="chat-fab" id="chatFab">
+  <div class="chat-window" id="chatWindow">
+    <div class="cw-header">
+      <div class="cw-header-icon">🧭</div>
+      <div class="cw-header-info">
+        <h3>PSL Talent Assistant</h3>
+        <p><span class="cw-dot"></span>Online · Ask me anything</p>
+      </div>
+    </div>
+    <div class="cw-quick">
+      <button class="cw-qbtn" onclick="cSendQ('How many days annual leave do I have?')">📅 Leave</button>
+      <button class="cw-qbtn" onclick="cSendQ('What are my medical benefits?')">🏥 Medical</button>
+      <button class="cw-qbtn" onclick="cSendQ('How do I submit an expense?')">💰 Expenses</button>
+      <button class="cw-qbtn" onclick="cSendQ('Who do I contact for HR?')">📞 Contacts</button>
+    </div>
+    <div class="cw-messages" id="cwMessages"></div>
+    <div class="cw-input-bar">
+      <div class="cw-input-wrap">
+        <textarea id="cwInput" placeholder="Ask me an HR question…" rows="1"
+          onkeydown="cwHandleKey(event)" oninput="cwResize(this)"></textarea>
+      </div>
+      <button class="cw-send" id="cwSendBtn" onclick="cSendMessage()">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="cw-powered">Powered by Claude AI · PSL Group Malaysia</div>
+  </div>
+
+  <button class="chat-toggle" onclick="toggleChat()">
+    <span class="icon-open">💬</span>
+    <span class="icon-close">✕</span>
+    <span class="notif-dot" id="notifDot"></span>
+  </button>
+</div>
+
+<script>
+// ── WELCOME VOICE ──
+function playWelcomeVoice() {
+  if (!window.speechSynthesis) return;
+  const msg = new SpeechSynthesisUtterance("Welcome to the P S L Talent Guide Malaysia. How can we help you today?");
+  msg.lang = 'en-GB';
+  msg.rate = 0.92;
+  msg.pitch = 1.05;
+  msg.volume = 1;
+
+  const trySpeak = () => {
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v =>
+      v.lang.startsWith('en') && (
+        v.name.includes('Female') ||
+        v.name.includes('Samantha') ||
+        v.name.includes('Karen') ||
+        v.name.includes('Moira') ||
+        v.name.includes('Victoria') ||
+        v.name.includes('Google UK English Female') ||
+        v.name.includes('Microsoft Zira') ||
+        v.name.includes('Microsoft Libby')
+      )
+    );
+    if (preferred) msg.voice = preferred;
+    window.speechSynthesis.speak(msg);
+  };
+
+  if (window.speechSynthesis.getVoices().length > 0) {
+    trySpeak();
+  } else {
+    window.speechSynthesis.onvoiceschanged = trySpeak;
+  }
+}
+
+let voicePlayed = false;
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (!voicePlayed) { voicePlayed = true; playWelcomeVoice(); }
+  }, 1200);
+});
+document.addEventListener('click', () => {
+  if (!voicePlayed) { voicePlayed = true; playWelcomeVoice(); }
+}, { once: true });
+
+// ── SEARCH KNOWLEDGE BASE ──
+const KB = [
+  { title:"Annual Leave", desc:"18 days/year after probation. Carry forward max 5 days, use by March 31st or forfeited.", url:"https://docs.google.com/document/d/13R1oIRzuxysDC6y4HYEQi3EQTh7JjjcIV1W6XgWRD94/edit?tab=t.0#heading=h.f97psnnxa0xm:~:text=Editing-,Annual%20Leave,-Annual%20Leave", icon:"📅", tags:["annual leave","leave","vacation","carry forward","time off","cuti"] },
+  { title:"Sick Leave", desc:"<2 years: 14 days | 2-5 years: 18 days | >5 years: 22 days. Register via TimeOut.", url:"https://docs.google.com/document/d/13R1oIRzuxysDC6y4HYEQi3EQTh7JjjcIV1W6XgWRD94/edit?tab=t.0#heading=h.o3drr4u4kpba", icon:"🤒", tags:["sick","sick leave","mc","medical leave","illness","unwell","sakit"] },
+  { title:"Public Holidays 2026", desc:"16 holidays. Includes CNY Feb 17-18, Hari Raya Mar 23, Labour Day May 1, National Day Aug 31.", url:"https://docs.google.com/document/d/1QdpWKaMXVVuV9Zh1h8cEB6TjHked32uR3c1OWvtRpQQ/edit?tab=t.0", icon:"🗓️", tags:["public holiday","raya","cny","chinese new year","merdeka","deepavali","national day","christmas","hari raya","cuti umum"] },
+  { title:"MiCARE Medical Insurance", desc:"GP: RM2,000/year. Specialist: RM2,500/year (needs GP referral). Portal: eclaims.micaresvc.com", url:"https://drive.google.com/file/d/14fPAOeSe_xVWK46ThgrYnn1FIOXRsdEp/view?usp=drive_link", icon:"🏥", tags:["medical","insurance","micare","doctor","hospital","clinic","gp","specialist","outpatient","panel"] },
+  { title:"Wellness Benefit", desc:"RM800/year for dental, optical, health screening. Includes spouse & children.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/benefits", icon:"💊", tags:["wellness","dental","optical","health","benefit","claim","gigi","mata"] },
+  { title:"Expense Claims (Maconomy)", desc:"Submit via Maconomy on desktop. Overhead project code: 630000008. Must submit within 90 days.", url:"https://docs.google.com/document/d/133MY3ghu93nf6Zq-OFupq_7823xhTf3rMteh3bZxPYo/edit?tab=t.0", icon:"💰", tags:["expense","claim","maconomy","reimburse","receipt","travel claim","tuntutan"] },
+  { title:"Internet Reimbursement", desc:"Max RM180/month for home internet. Submit monthly via Maconomy (confirmed employees only).", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/policies-and-procedures", icon:"🌐", tags:["internet","wifi","broadband","reimbursement","home office","internet claim"] },
+  { title:"Salary & Payroll", desc:"Paid on the 28th of each month. 13th month pay at year end. Contact: ben.tan@pslgroup.com", url:"https://docs.google.com/document/d/13R1oIRzuxysDC6y4HYEQi3EQTh7JjjcIV1W6XgWRD94/edit?tab=t.0#heading=h.8sjmjcy44wlc", icon:"💵", tags:["salary","payroll","pay","payment","wage","payslip","gaji","13th month"] },
+  { title:"Contact HR / Talent", desc:"lokman.omar@pslgroup.com or gerardo.zamora@pslgroup.com — for benefits and career questions.", url:"mailto:lokman.omar@pslgroup.com", icon:"👤", tags:["contact","hr","talent","human resources","lokman","gerardo","hubungi"] },
+  { title:"Contact Finance", desc:"For payroll queries: ben.tan@pslgroup.com", url:"mailto:ben.tan@pslgroup.com", icon:"📊", tags:["finance","payroll","contact finance","ben tan","kewangan"] },
+  { title:"Contact IT Support", desc:"For all technical issues, open a ticket by emailing the IT team.", url:"mailto:support.pslasia@pslgroup.com", icon:"💻", tags:["it","tech","technical","support","laptop","computer","it support","it help","it ticket"] },
+  { title:"TimeOut (Leave Portal)", desc:"Submit and manage all your leave online via the TimeOut system.", url:"https://www.unitysuite.com/PSL/ASPX/Signin.aspx", icon:"⏰", tags:["timeout","leave system","submit leave","apply leave","portal","leave portal"] },
+  { title:"Jobs Board", desc:"View internal openings and apply for positions at PSL Group via Greenhouse.", url:"https://job-boards.greenhouse.io/pslgroup", icon:"💼", tags:["job","vacancy","career","apply","opening","transfer","promotion","jawatan"] },
+  { title:"LinkedIn Learning", desc:"Company-wide access to thousands of courses. Speak to manager then contact Talent.", url:"https://docs.google.com/spreadsheets/d/1ooJiW4z4QIt30Jhk-a8Sd5xCxx-ClExhfdGlE3NZ6yU/edit", icon:"📚", tags:["linkedin","learning","training","course","development","upskill","latihan"] },
+  { title:"HRD Corp Training", desc:"Available after 1 year service. Submit Training Form 1 month before. Contact lokman.omar@pslgroup.com", url:"https://docs.google.com/forms/d/e/1FAIpQLSeWfMReJxEE4FiD-ghwLuah5bFRt-A_wTuwIZtHIhvnJlHozw/viewform", icon:"🎓", tags:["training","hrd","hrdc","course","development","external training","hrdf"] },
+  { title:"Maternity & Paternity Leave", desc:"Maternity: 98 calendar days full pay. Paternity: 7 consecutive days after probation.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook", icon:"👶", tags:["maternity","paternity","baby","confinement","parental","bersalin","cuti bersalin"] },
+  { title:"Ultiflex (Work from Home)", desc:"PSL's hybrid work model. In-person required for new hire day 1 and key team meetings.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/policies-and-procedures", icon:"🏠", tags:["ultiflex","wfh","work from home","remote","hybrid","telecommute","kerja dari rumah"] },
+  { title:"Overtime Policy", desc:"Applies to employees below RM4,000/month. Normal day: 1.5x | Rest day: 2x | Public holiday: 3x.", url:"https://docs.google.com/document/d/13R1oIRzuxysDC6y4HYEQi3EQTh7JjjcIV1W6XgWRD94/edit?tab=t.0#heading=h.jahbl1nkok32", icon:"⏱️", tags:["overtime","ot","extra hours","work late","claim ot","kerja lebih masa"] },
+  { title:"UK Shift Allowance", desc:"RM40/day for employees required to work UK shift hours (4:00pm – 12:30am).", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook", icon:"🌙", tags:["uk shift","shift allowance","night shift","late shift","4pm","elaun shift"] },
+  { title:"Employee Referral Bonus", desc:"RM1,500 (Executive) or RM2,500 (Senior/Tech). Paid in 2 instalments.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/benefits", icon:"🤝", tags:["referral","bonus","recruit","refer","recommend","referral bonus"] },
+  { title:"Achiever's Paradise Awards", desc:"Peer-nominated recognition program via Quickbase. Quarterly cash prizes, $500 annual cap.", url:"https://pslgroup.quickbase.com/nav/app/bqyku88pg/action/appoverview", icon:"🏆", tags:["achiever","award","recognition","nominate","prize","reward","quickbase"] },
+  { title:"Anniversary Awards", desc:"RM2,000 (5yr) | RM5,000 (10yr) | RM6,000 (15/20/25yr+) + 5 extra leave days at 10yr milestones.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/benefits", icon:"🎂", tags:["anniversary","award","years service","milestone","loyalty","service award"] },
+  { title:"13th Month Pay", desc:"One month basic salary paid at end of calendar year (December). Pro-rated for first year.", url:"https://docs.google.com/document/d/13R1oIRzuxysDC6y4HYEQi3EQTh7JjjcIV1W6XgWRD94/edit?tab=t.0#heading=h.8sjmjcy44wlc", icon:"🎁", tags:["13th month","bonus","year end","thirteenth","december bonus"] },
+  { title:"Information Security Policy", desc:"No unauthorized software. Passwords min 8 chars. Report incidents to support.pslasia@pslgroup.com", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/policies-and-procedures", icon:"🔒", tags:["security","password","information security","data","confidential","pisp","it policy"] },
+  { title:"Dougall PSL (AI Assistant)", desc:"PSL's internal AI tool. Sign in with your PSL email at dougallpsl.com to get started.", url:"https://www.dougallpsl.com", icon:"🤖", tags:["ai","dougall","assistant","artificial intelligence","dougall psl","psl ai tool"] },
+  { title:"Upcoming Events 2026", desc:"Fun Art Collage, Pickleball, Kopi & Kakis, Holiday Party and more throughout the year.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/yearly-events-calendar-2023", icon:"🎉", tags:["event","events","activities","team building","calendar","fun","upcoming"] },
+  { title:"Email Etiquette Guide", desc:"Best practices: subject lines, urgent vs action, To vs CC, reply-all, attachments.", url:"https://drive.google.com/file/d/1J_DB9IDOBBwIwTB7G2fHJXWCehW8Wfc2/view", icon:"✉️", tags:["email","etiquette","communication","professional","reply","cc","best practice"] },
+  { title:"About PSL Group", desc:"Global organisation putting information at the service of medicine. Watch our welcome video.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/about-us", icon:"🏢", tags:["about","culture","vision","mission","psl","values","welcome","company"] },
+  { title:"Compassionate Leave", desc:"Up to 3 working days for death of immediate family member.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook", icon:"🌹", tags:["compassionate","death","bereavement","family","funeral","cuti kematian"] },
+  { title:"Travel Policy", desc:"Airfare, hotel, meals, car rental and reimbursement rules for business travel.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/policies-and-procedures", icon:"✈️", tags:["travel","flight","hotel","business travel","travel claim","accommodation"] },
+  { title:"Grievance Procedure", desc:"Raise grievance with Line Manager within 7 days. 3-step process: raise → hearing → appeal.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook", icon:"⚖️", tags:["grievance","complaint","dispute","appeal","hearing","aduan"] },
+  { title:"Disciplinary Process", desc:"PIP → Written Warning → Suspension → Dismissal. Contact Talent for guidance.", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook", icon:"📝", tags:["discipline","warning","suspension","termination","dismissal","show cause","pip"] },
+];
+
+function doSearch(q) {
+  const query = q.toLowerCase().trim();
+  const el = document.getElementById('searchResults');
+  if (!query) { el.classList.remove('active'); return; }
+  const hits = KB.filter(item =>
+    item.tags.some(t => t === query || t.startsWith(query) || query.startsWith(t)) ||
+    item.title.toLowerCase().includes(query)
+  ).slice(0, 6);
+  if (!hits.length) {
+    el.innerHTML = `<div class="no-results">No results for "<strong>${q}</strong>" — try the AI assistant below 💬</div>`;
+  } else {
+    el.innerHTML = hits.map(h => `
+      <a class="result-item" href="${h.url}" target="_blank">
+        <span class="result-icon">${h.icon}</span>
+        <span class="result-body">
+          <span class="result-title">${h.title}</span>
+          <span class="result-desc">${h.desc}</span>
+        </span>
+        <span class="result-arrow">›</span>
+      </a>`).join('');
+  }
+  el.classList.add('active');
+}
+
+function trigger(q) {
+  document.getElementById('searchInput').value = q;
+  doSearch(q);
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap'))
+    document.getElementById('searchResults').classList.remove('active');
+});
+
+// ── CHATBOT ──
+const CHAT_PAGES = [
+  { name:"Policies & Procedures", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/policies-and-procedures", icon:"📋", desc:"Policies, travel, security, telecommuting" },
+  { name:"Employee Benefits", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/benefits", icon:"🎁", desc:"MiCARE, wellness, LinkedIn Learning" },
+  { name:"Employee Handbook", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook", icon:"📖", desc:"Leave, conduct, grievance" },
+  { name:"Holiday Calendar", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/holiday-calendar", icon:"📅", desc:"Malaysia 2026 public holidays" },
+  { name:"Jobs Board", url:"https://job-boards.greenhouse.io/pslgroup", icon:"💼", desc:"Career opportunities" },
+  { name:"Best Practice", url:"https://drive.google.com/file/d/1J_DB9IDOBBwIwTB7G2fHJXWCehW8Wfc2/view", icon:"✅", desc:"Email etiquette guide" },
+  { name:"Upcoming Events", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/yearly-events-calendar-2023", icon:"🎉", desc:"2026 events calendar" },
+  { name:"About Us", url:"https://sites.google.com/pslgroup.com/psltalentguidemly/home/about-us", icon:"🏢", desc:"PSL vision and culture" },
+];
+
+const SYSTEM = `You are the PSL Talent Guide Assistant for PSL Group Malaysia (PeerHealth Malaysia Sdn. Bhd.).
+Answer HR questions directly and accurately. Always include relevant links using [Page Name](URL) format.
+
+KEY FACTS:
+- Annual Leave: 18 days/year after probation. Carry forward max 5 days, use by March 31.
+- Sick Leave: <2yr=14days, 2-5yr=18days, >5yr=22days. Hospitalisation up to 60 days.
+- Maternity: 98 calendar days full pay. Paternity: 7 days after probation.
+- Compassionate: 3 days for immediate family death.
+- Salary paid 28th each month. 13th month pay end of year.
+- Overtime: only <RM4,000/month. Normal 1.5x, rest day 2x, PH 3x.
+- Internet claim: max RM180/month via Maconomy. Expenses within 90 days.
+- Medical: GP RM2,000/yr, Specialist RM2,500/yr via MiCARE.
+- Wellness: RM800/yr dental/optical/health (includes spouse & children).
+- UK Shift: RM40/day allowance (4pm-12:30am).
+- Referral bonus: RM1,500 Executive, RM2,500 Senior/Tech.
+- Anniversary: RM2,000(5yr), RM5,000(10yr), RM6,000(15/20/25yr+).
+
+CONTACTS:
+- HR/Talent: lokman.omar@pslgroup.com or gerardo.zamora@pslgroup.com
+- Finance/Payroll: ben.tan@pslgroup.com
+- IT: support.pslasia@pslgroup.com
+- Admin: pslmyadmin@pslgroup.com
+- TimeOut: https://www.unitysuite.com/PSL/ASPX/Signin.aspx
+- MiCARE: https://eclaims.micaresvc.com/login.aspx | 1800-88-2678
+- Dougall PSL AI: https://www.dougallpsl.com
+
+HOLIDAYS 2026: New Year Jan1, Thaipusam Feb2, CNY Feb17-18, Hari Raya Puasa Mar23, Labour Day May1, Hari Raya Haji May27, Agong Birthday Jun1, Wesak Jun2, Awal Muharram Jun17, Maulidur Rasul Aug25, National Day Aug31, Malaysia Day Sep16, Deepavali Nov9, Sultan Selangor Birthday Dec11, Christmas Dec25.
+
+PAGES:
+- Policies: https://sites.google.com/pslgroup.com/psltalentguidemly/home/policies-and-procedures
+- Benefits: https://sites.google.com/pslgroup.com/psltalentguidemly/home/benefits
+- Handbook: https://sites.google.com/pslgroup.com/psltalentguidemly/home/handbook
+- Holidays: https://sites.google.com/pslgroup.com/psltalentguidemly/home/holiday-calendar
+- Jobs: https://job-boards.greenhouse.io/pslgroup
+- Best Practice: https://drive.google.com/file/d/1J_DB9IDOBBwIwTB7G2fHJXWCehW8Wfc2/view
+- Events: https://sites.google.com/pslgroup.com/psltalentguidemly/home/yearly-events-calendar-2023
+- About: https://sites.google.com/pslgroup.com/psltalentguidemly/home/about-us
+
+Keep answers concise. Respond in English or Bahasa Malaysia based on user. End with offer to help further.`;
+
+let chatHistory = [];
+let chatLoading = false;
+let chatOpened = false;
+
+function toggleChat() {
+  const fab = document.getElementById('chatFab');
+  const dot = document.getElementById('notifDot');
+  fab.classList.toggle('open');
+  dot.style.display = 'none';
+  if (!chatOpened) {
+    chatOpened = true;
+    setTimeout(() => {
+      cwAppend('bot', "👋 Hi! I'm your PSL Talent Assistant. Ask me anything about HR policies, leave, benefits, or contacts!");
+    }, 300);
+  }
+}
+
+function cwResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,60)+'px'; }
+function cwHandleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();cSendMessage();} }
+function cSendQ(t) {
+  const fab = document.getElementById('chatFab');
+  if (!fab.classList.contains('open')) toggleChat();
+  document.getElementById('cwInput').value = t;
+  cSendMessage();
+}
+
+function cwFormat(text) {
+  let html = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, (m, title, url) => {
+    const p = CHAT_PAGES.find(x => x.url===url || x.name===title);
+    if (p) return `<a href="${url}" target="_blank" class="cw-page-card"><span class="cw-pc-icon">${p.icon}</span><span style="flex:1"><span class="cw-pc-title">${p.name}</span><span class="cw-pc-desc">${p.desc}</span></span><span class="cw-pc-arrow">→</span></a>`;
+    return `<a href="${url}" target="_blank" style="color:#e8472a;font-weight:600;">${title}</a>`;
+  });
+  html = html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  html = html.replace(/\n/g,'<br>');
+  return html;
+}
+
+function cwAppend(role, content) {
+  const msgs = document.getElementById('cwMessages');
+  const div = document.createElement('div'); div.className=`cw-msg ${role}`;
+  const av = document.createElement('div'); av.className=`cw-av ${role}`; av.textContent=role==='bot'?'🧭':'ME';
+  const bub = document.createElement('div'); bub.className='cw-bub'; bub.innerHTML=cwFormat(content);
+  div.appendChild(av); div.appendChild(bub); msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function cwShowTyping() {
+  const msgs = document.getElementById('cwMessages');
+  const div = document.createElement('div'); div.className='cw-msg bot'; div.id='cwTyping';
+  const av = document.createElement('div'); av.className='cw-av bot'; av.textContent='🧭';
+  const bub = document.createElement('div'); bub.className='cw-bub';
+  bub.innerHTML='<div class="cw-typing"><div class="cw-td"></div><div class="cw-td"></div><div class="cw-td"></div></div>';
+  div.appendChild(av); div.appendChild(bub); msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function cwRemoveTyping() { const el=document.getElementById('cwTyping'); if(el)el.remove(); }
+
+async function cSendMessage() {
+  if(chatLoading) return;
+  const input = document.getElementById('cwInput');
+  const text = input.value.trim(); if(!text) return;
+  input.value=''; input.style.height='auto';
+  chatLoading=true; document.getElementById('cwSendBtn').disabled=true;
+  cwAppend('user', text);
+  chatHistory.push({role:'user', content:text});
+  cwShowTyping();
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800, system:SYSTEM, messages:chatHistory })
+    });
+    const data = await res.json();
+    cwRemoveTyping();
+    const reply = data.content?.[0]?.text || "Sorry, I couldn't process that. Please try again.";
+    chatHistory.push({role:'assistant', content:reply});
+    cwAppend('bot', reply);
+  } catch(e) {
+    cwRemoveTyping();
+    cwAppend('bot', "Sorry, I'm having trouble connecting. Please try again in a moment.");
+  }
+  chatLoading=false; document.getElementById('cwSendBtn').disabled=false; input.focus();
+}
+</script>
+</body>
+</html>
